@@ -352,14 +352,15 @@ Error (422 Unprocessable Entity):
 
 1. Create Order:
 
-    #### Endpoint: /api/orders
-    
-    #### Method: POST
+   #### Endpoint: /api/orders
 
-    Headers:
-       
+   #### Method: POST
+
+   Headers:
+
         Authorization: Bearer {token},
         Content-Type: application/json
+
 Request Body:
 
 ```baash
@@ -401,7 +402,6 @@ Error (422 Unprocessable Entity):
     }
 }
 ```
-
 
 2. Update Order:
 
