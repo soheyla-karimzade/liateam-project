@@ -195,10 +195,10 @@ Success (201 Created):
 Error (422 Unprocessable Entity):
 ```
 {
-  "message": "The given data was invalid.",
-  "errors": {
-    "name": ["The name field is required."]
-  }
+    "message":"The name field is required.",
+    "errors":{
+        "name":["The name field is required."]
+    }
 }
 
 ```
@@ -240,12 +240,17 @@ Success (201 Created):
 }
 ```
 
-Error (400 Bad Request):
 
+Error (422 Unprocessable Entity):
 ```
-        Not enough inventory for product 1
+{
+    "message":"The products field is required.",
+    "errors":
+    {
+        "products":["The products field is required."]
+    }
+}
 ```
-
 
 License
 This project is open-source and available under the MIT License.

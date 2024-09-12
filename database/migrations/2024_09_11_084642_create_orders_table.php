@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->json('products')->nullable('false');
             $table->unsignedInteger('count')->default(0);
-            $table->decimal('total_price', 10, 2)->nullable('false');
+            $table->decimal('total_price', 10, 2)->default(0);
             $table->foreignId('user_id')->nullable('false')->index();
             $table->timestamps();
         });

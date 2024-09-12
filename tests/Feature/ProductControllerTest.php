@@ -52,6 +52,28 @@ class ProductControllerTest extends TestCase
             ]);
     }
 
+
+    public function test_cannot_create_product_without_required_data()
+    {
+        $response = $this->postJson('/api/products', [
+            'price' => 100.00,
+            'inventory' => 10,
+        ],
+            [
+                'Authorization' => 'Bearer ' . $this->token,
+            ]);
+
+
+        $content = $response->getContent();
+        $decodedContent = json_decode($content, true);
+
+        $response->assertStatus(422);
+        $this->assertNotNull( $decodedContent['errors']);
+        $this->assertSame('The name field is required.', $decodedContent['message']);
+        $this->assertSame('The name field is required.',$decodedContent['errors']['name'][0]);
+    }
+
+
     public function test_can_list_products()
     {
         $response = $this->getJson('/api/products',

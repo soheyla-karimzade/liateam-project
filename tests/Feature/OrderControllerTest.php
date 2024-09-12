@@ -58,6 +58,31 @@ class OrderControllerTest extends TestCase
             ]);
     }
 
+    public function test_cannot_create_order_without_required_data()
+    {
+        $product1 = $this->product->first();
+        $product2 = $this->product->last();
+
+        $response = $this->postJson('/api/orders', [
+            'count' => 1,
+            'total_price' => 100.00,
+        ],
+            [
+                'Authorization' => 'Bearer ' . $this->token,
+            ]
+        );
+
+        $content = $response->getContent();
+        $decodedContent = json_decode($content, true);
+
+        $response->assertStatus(422);
+        $this->assertNotNull( $decodedContent['errors']);
+        $this->assertSame('The products field is required.', $decodedContent['message']);
+        $this->assertSame('The products field is required.',$decodedContent['errors']['products'][0]);
+    }
+
+
+
     public function test_can_list_orders()
     {
         $response = $this->getJson('/api/orders', [
