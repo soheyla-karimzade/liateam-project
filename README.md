@@ -350,17 +350,67 @@ Error (422 Unprocessable Entity):
 
 ## Order CRUD Operations
 
+1. Create Order:
+
+    #### Endpoint: /api/orders
+    
+    #### Method: POST
+
+    Headers:
+       
+        Authorization: Bearer {token},
+        Content-Type: application/json
+Request Body:
+
+```baash
+    {
+        'products' => [
+            ['id' => 1, 'quantity' => 2],
+            ['id' => 2, 'quantity' => 1]
+        ],
+        'count' => 1,
+        'total_price' => 100.00,
+    }
+```
+
+Response:
+
+Success (201 Created):
+
+```
+{
+
+  "total_price": 100.00,
+ 'count' => 1,
+  "products": [
+        ['id' => 1, 'quantity' => 2],
+        ['id' => 2, 'quantity' => 1]
+  ],
+  "created_at": "2024-09-12T12:34:56.000000Z"
+}
+```
+
+Error (422 Unprocessable Entity):
+
+```bash
+{
+    "message":"The products field is required.",
+    "errors":
+    {
+        "products":["The products field is required."]
+    }
+}
+```
 
 
-
-### Update Order:
+2. Update Order:
 
 #### Endpoint: /api/orders/{id}
 
 #### Method: PUT
 
 Headers:
-    
+
     Authorization: Bearer {token},
     Content-Type: application/json
 
@@ -405,7 +455,7 @@ Error (422 Unprocessable Entity):
 }
 ```
 
-2. Get All Orders
+3. Get All Orders
 
    #### Endpoint: /api/orders
    #### Method: GET
@@ -440,7 +490,7 @@ Error (422 Unprocessable Entity):
     ```
 
 
-3. Get Order by ID
+4. Get Order by ID
    #### Endpoint: /api/orders/{id}
    #### Method: GET
    Headers:
@@ -479,7 +529,7 @@ Error (404 Not Found):
     
 ```
 
-4. Delete Order
+5. Delete Order
    #### Endpoint: /api/orders/{id}
    #### Method: DELETE
 
