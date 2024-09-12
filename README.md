@@ -350,22 +350,26 @@ Error (422 Unprocessable Entity):
 
 ## Order CRUD Operations
 
-### Create Order:
 
-#### Endpoint: /api/orders
 
-#### Method: POST
+
+### Update Order:
+
+#### Endpoint: /api/orders/{id}
+
+#### Method: PUT
 
 Headers:
-Authorization: Bearer {token},
-Content-Type: application/json
+    
+    Authorization: Bearer {token},
+    Content-Type: application/json
+
 Request Body:
 
 ```baash
     {
         'products' => [
             ['id' => 1, 'quantity' => 2],
-            ['id' => 2, 'quantity' => 1]
         ],
         'count' => 1,
         'total_price' => 100.00,
@@ -374,7 +378,7 @@ Request Body:
 
 Response:
 
-Success (201 Created):
+Success (200):
 
 ```
 {
@@ -382,10 +386,10 @@ Success (201 Created):
   "total_price": 100.00,
  'count' => 1,
   "products": [
-        ['id' => 1, 'quantity' => 2],
-        ['id' => 2, 'quantity' => 1]
+       ['id' => 1, 'quantity' => 2],
   ],
-  "created_at": "2024-09-12T12:34:56.000000Z"
+  "created_at": "2024-09-12T12:34:56.000000Z",
+  "updated_at": "2024-09-12T12:34:56.000000Z"
 }
 ```
 
