@@ -1,7 +1,7 @@
-
 # My Laravel Project with JWT Authentication
 
-This is a Laravel project that implements JWT-based authentication, MongoDB for the database, Redis for caching, and the Repository design pattern. The project includes user registration, login, and CRUD operations for products and orders.
+This is a Laravel project that implements JWT-based authentication, MongoDB for the database, Redis for caching, and the
+Repository design pattern. The project includes user registration, login, and CRUD operations for products and orders.
 
 ## Installation
 
@@ -9,17 +9,17 @@ This is a Laravel project that implements JWT-based authentication, MongoDB for 
    ```bash
    git clone https://github.com/your-repo.git
    cd your-repo
-   
+
 2. Install dependencies:
    ```bash
     composer install
 3. Copy the .env.example file and update the environment variables:
     ```bash
    cp .env.example .env
-   
-4.  for run mongodb container in Docker 
-    ```bash
-    docker-compose up -d
+
+4. for run mongodb container in Docker
+   ```bash
+   docker-compose up -d
 
 5. Update the database and cache configuration in the .env file:
     ```bash
@@ -37,14 +37,14 @@ This is a Laravel project that implements JWT-based authentication, MongoDB for 
 7. Run the database seeders:
     ```bashe
     php artisan db:seed
-   
+
 8. Generate JWT secret:
     ```bash
     php artisan jwt:secret
 9. Start the application:
     ```bash
    php artisan serve
-   
+
 10. Running Tests
     ```bash
        ./vendor/bin/pest
@@ -54,20 +54,23 @@ This is a Laravel project that implements JWT-based authentication, MongoDB for 
         php artisan test
     ```
 
-   
-
-
 ### API Routes
-    
-#### Auth
-User Registration
-    Endpoint: /api/register
-    Method: POST
 
-    Headers:
-        Content-Type: application/json
-        Request Body:
-    ```
+#### Auth
+
+User Registration
+
+#### Endpoint: /api/register
+
+#### Method: POST
+
+Headers:
+
+    Content-Type: application/json
+
+Request Body:
+
+```bash
     {
       "name": "test",
       "email": "user_test2@gmail.com",
@@ -89,8 +92,10 @@ User Registration
         },
         "token": "your-jwt-token"
     }
+```
 
 Error (422 Unprocessable Entity):
+
   ```bash
         {
         "email": [
@@ -98,47 +103,49 @@ Error (422 Unprocessable Entity):
         ]
         }
 ```
-    
-    
+
 2. User Login
-   Endpoint: /api/login
-   Method: POST
+   #### Endpoint: /api/login
+   #### Method: POST
 
-    Headers:
-    
-    Content-Type: application/json
-    Request Body:
-```
-{
-  "email": "user_test2@gmail.com",
-  "password": "password"
-}
-```
-Response:
-Success (200 OK):
-```
-{
-    "message": "login successfully",
-    "token": "your-jwt-token"
-}
-```
+   Headers:
 
-Error (401 Unauthorized):
-```bash
+        Content-Type: application/json
+
+   Request Body:
+
+    ```
     {
-    "error": "unAuthorised"
-}
-```
+      "email": "user_test2@gmail.com",
+      "password": "password"
+    }
+    ```
+   Response:
+   Success (200 OK):
+    ```
+    {
+        "message": "login successfully",
+        "token": "your-jwt-token"
+    }
+    ```
+
+   Error (401 Unauthorized):
+    ```bash
+        {
+        "error": "unAuthorised"
+    }
+    ```
 
 3. Get Authenticated User Info
-   Endpoint: /api/user
-   Method: GET
-    
-    Headers:
+   #### Endpoint: /api/user
+   #### Method: GET
+
+   Headers:
+
         Authorization: Bearer {token}
-    
-    Response:
-    Success (200 OK):
+
+   Response:
+   Success (200 OK):
     ```
    {
         "_id": "66e312d1d6bcfa1735022603",
@@ -149,84 +156,226 @@ Error (401 Unauthorized):
     }
    ```
    Error (401 Unauthorized):
-   
+
     ```
     {
       "message": "Unauthenticated."
       }
    ```
+
 ----------------------------------------------------------------------
- 
+
 #### Product CRUD Operations
 
-Create Product:
+1. Create Product:
 
-   Endpoint: /api/products
-   Method: POST
+   #### Endpoint: /api/products
+   #### Method: POST
 
    Headers:
 
-   Authorization: Bearer {token}
-  , Content-Type: application/json
-   
-Request Body:
-   
-```
-   {
-       "name": "Product Name",
-       "price": 100.50,
-       "inventory": 10
-   }
-```
+       Authorization: Bearer {token}
+       Content-Type: application/json
 
-Response:
+   Request Body:
 
-Success (201 Created):
-```
-{
-  "name": "Product Name",
-  "price": 100.50,
-  "inventory": 10,
-  "created_at": "2024-09-12T12:34:56.000000Z",
-  "updated_at": "2024-09-12T12:34:56.000000Z"
-}
-```
+    ```
+       {
+           "name": "Product Name",
+           "price": 100.50,
+           "inventory": 10
+       }
+    ```
 
-Error (422 Unprocessable Entity):
-```
-{
-    "message":"The name field is required.",
-    "errors":{
-        "name":["The name field is required."]
+   Response:
+
+   Success (201 Created):
+    ```
+    {
+      "name": "Product Name",
+      "price": 100.50,
+      "inventory": 10,
+      "created_at": "2024-09-12T12:34:56.000000Z",
+      "updated_at": "2024-09-12T12:34:56.000000Z"
     }
-}
+    ```
 
-```
+   Error (422 Unprocessable Entity):
+    ```
+    {
+        "message":"The name field is required.",
+        "errors":{
+            "name":["The name field is required."]
+        }
+    }
+    
+    ```
 
-#### Order CRUD Operations
-Create Order:
 
-Endpoint: /api/orders
-Method: POST
+2. Get All Products
+   #### Endpoint: /api/products
+   #### Method: GET
+
+   Headers:
+
+        Authorization: Bearer {token}
+        Response:
+
+   Success (200 OK):
+    ```
+            [
+                {
+                "name": "Product 1",
+                "price": 100.50,
+                "inventory": 10,
+                "created_at": "2024-09-12T12:34:56.000000Z",
+                "updated_at": "2024-09-12T12:34:56.000000Z",
+                "user_id": "1"
+                },
+                {
+                "id": 2,
+                "name": "Product 2",
+                "price": 50.00,
+                "inventory": 5,
+                "created_at": "2024-09-12T12:34:56.000000Z",
+                "updated_at": "2024-09-12T12:34:56.000000Z",
+                "user_id": "1"
+                }
+            ]
+    ```
+
+3. Get Product by ID
+   #### Endpoint: /api/products/{id}
+   #### Method: GET
+
+   Headers:
+
+        Authorization: Bearer {token}
+        Response:
+
+   Success (200 OK):
+    ```
+    {
+      "id": 1,
+      "name": "Product Name",
+      "price": 100.50,
+      "inventory": 10,
+      "created_at": "2024-09-12T12:34:56.000000Z",
+      "updated_at": "2024-09-12T12:34:56.000000Z",
+       "user_id": "1"
+    }
+    
+    ```
+   Error (404 Not Found):
+    ```
+    {
+      "message": "Product not found."
+    }
+    
+    ```
+
+
+4. Update Product
+   #### Endpoint: /api/products/{id}
+   #### Method: PUT
+
+   Headers:
+
+        Authorization: Bearer {token}
+        Content-Type: application/json
+
+   Request Body:
+    ```
+       {
+           "name": "Product Name",
+           "price": 100.50,
+           "inventory": 10
+       }
+    ```
+
+   Response:
+
+   Success (200):
+    ```
+    {
+      "name": "Product Name",
+      "price": 100.50,
+      "inventory": 10,
+      "created_at": "2024-09-12T12:34:56.000000Z",
+      "updated_at": "2024-09-12T12:34:56.000000Z"
+    }
+    ```
+
+   Error (422 Unprocessable Entity):
+    ```
+    {
+        "message":"The name field is required.",
+        "errors":{
+            "name":["The name field is required."]
+        }
+    }   
+    ```
+
+   Error (404 Not Found):
+    ```
+    {
+      "message": "Product not found."
+    }
+    
+    ```
+
+5. Delete Product
+   #### Endpoint: /api/products/{id}
+   #### Method: DELETE
+
+   Headers:
+
+        Authorization: Bearer {token}
+        Response:
+
+   Success (204 OK):
+    ```
+    {
+    "message": "Product deleted successfully."
+    }
+    
+    ```
+   Error (404 Not Found):
+    ```
+    {
+      "message": "Product not found."
+    }
+    
+    ```
+
+## Order CRUD Operations
+
+### Create Order:
+
+#### Endpoint: /api/orders
+
+#### Method: POST
 
 Headers:
 Authorization: Bearer {token},
 Content-Type: application/json
 Request Body:
 
-````
-{
-    'products' => [
-        ['id' => 1, 'quantity' => 2],
-        ['id' => 2, 'quantity' => 1]
-    ],
-    'count' => 1,
-    'total_price' => 100.00,
-}
-````
+```baash
+    {
+        'products' => [
+            ['id' => 1, 'quantity' => 2],
+            ['id' => 2, 'quantity' => 1]
+        ],
+        'count' => 1,
+        'total_price' => 100.00,
+    }
+```
+
 Response:
 
 Success (201 Created):
+
 ```
 {
 
@@ -240,9 +389,9 @@ Success (201 Created):
 }
 ```
 
-
 Error (422 Unprocessable Entity):
-```
+
+```bash
 {
     "message":"The products field is required.",
     "errors":
@@ -252,12 +401,110 @@ Error (422 Unprocessable Entity):
 }
 ```
 
+2. Get All Orders
+
+   #### Endpoint: /api/orders
+   #### Method: GET
+
+   Headers:
+
+        Authorization: Bearer {token}
+   Response:
+
+   Success (200 OK):
+
+    ```
+    [
+      {
+       "count":3,
+        "total_price": 201.00,
+        "products": [
+          {
+            "id": 1,
+            "quantity": 2
+          },
+          {
+            "id": 2,
+            "quantity": 1
+          }
+        ],
+        "created_at": "2024-09-12T12:34:56.000000Z"
+        "updated_at": "2024-09-12T12:34:56.000000Z"
+      }
+    ]
+    
+    ```
+
+
+3. Get Order by ID
+   #### Endpoint: /api/orders/{id}
+   #### Method: GET
+   Headers:
+
+        Authorization: Bearer {token}
+        Response:
+
+   Success (200 OK):
+
+    ```bash
+            {
+               "count":3,
+                "total_price": 201.00,
+                "products": [
+                  {
+                    "id": 1,
+                    "quantity": 2
+                  },
+                  {
+                    "id": 2,
+                    "quantity": 1
+                  }
+                ],
+                "created_at": "2024-09-12T12:34:56.000000Z"
+                "updated_at": "2024-09-12T12:34:56.000000Z"
+            }
+            
+      ```
+
+Error (404 Not Found):
+
+```
+        {
+          "message": "Order not found."
+        }
+    
+```
+
+4. Delete Order
+   #### Endpoint: /api/orders/{id}
+   #### Method: DELETE
+
+   Headers:
+
+   Authorization: Bearer {token}
+   Response:
+   Success (204 OK):
+
+```
+{
+  "message": "Order deleted successfully."
+}
+
+```
+
+Error (404 Not Found):
+
+```
+{
+  "message": "Order not found."
+}
+```
+
 License
 This project is open-source and available under the MIT License.
 
-
-
 ### توضیحات:
+
 - **Endpoint**: مسیر API
 - **Method**: نوع درخواست (GET, POST, PUT, DELETE)
 - **Headers**: هدرهایی که باید به درخواست اضافه شوند
